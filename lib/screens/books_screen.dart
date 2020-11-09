@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_university/components/book_item.dart';
+import 'package:my_university/components/book_item2.dart';
 import 'package:my_university/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'package:my_university/screens/filter_screen.dart';
 
-String url = 'https://jsonplaceholder.typicode.com/todos';
+import '../components/book_item.dart';
+
+// String url = 'https://jsonplaceholder.typicode.com/todos';
+String booksUrl = 'http://danibazi9.pythonanywhere.com//api/bbse/book/';
+String faculties = 'http://danibazi9.pythonanywhere.com//api/bbse/faculties';
+String onlyBookUrl = 'https://images-na.ssl-images-amazon.com/images/I/31o6m4snULL._SX346_BO1,204,203,200_.jpg';
 
 class BooksScreen extends StatefulWidget {
   static String id = 'books_screen';
@@ -76,7 +82,9 @@ class _BooksScreenState extends State<BooksScreen> {
       //     ),
       //   ),
       // ), preferredSize: Size.fromHeight(80)),
-      appBar: FloatAppBar(controller: controller,),
+      appBar: FloatAppBar(
+        controller: controller,
+      ),
       body: RefreshIndicator(
         onRefresh: () {
           return _refresh();
@@ -84,15 +92,16 @@ class _BooksScreenState extends State<BooksScreen> {
         child: Padding(
           padding: EdgeInsets.only(top: 10),
           child: FutureBuilder(
-              future: http.get(url),
+              future: http.get(booksUrl),
               builder: (context, snapshot) {
-                return ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    // return Container(child: Text('$index: ${mapList[index]['title']}'), color: Colors.red, margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),);
-                    return MyBookItem('url','title', 'description', 'category','2000', onPressed());
-                  },
-                );
+                // return ListView.builder(
+                //   itemCount: 10,
+                //   itemBuilder: (context, index) {
+                //     // return Container(child: Text('$index: ${mapList[index]['title']}'), color: Colors.red, margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),);
+                //     // return MyBookItem('url','title', 'description', 'category','2000', onPressed());
+                //     return BookItem();
+                //   },
+                // );
                 if (snapshot.hasData) {
                   if (snapshot.data != null) {
                     if (snapshot.connectionState == ConnectionState.done) {
@@ -101,16 +110,32 @@ class _BooksScreenState extends State<BooksScreen> {
                       // List<Map> jsonResponse = convert.jsonDecode(response.body);
                       var jsonResponse = convert.jsonDecode(response.body);
                       List<Map> mapList = [];
-                      for(Map map in jsonResponse){
+                      for (Map map in jsonResponse) {
                         mapList.add(map);
                       }
-                      int count = response.body.length;
-                      print(count);
+                      int count = mapList.length;
+                      print('count is: ' + count.toString());
                       return ListView.builder(
                         itemCount: count,
                         itemBuilder: (context, index) {
-                          return Container(child: Text('$index: ${mapList[index]['title']}'), color: Colors.red, margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),);
-                        },
+                          // return Container(child: Text('$index: ${mapList[index]['name']}'), color: Colors.red, margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),);
+                        //   return MyBookItem(
+                        //       onlyBookUrl,
+                        //       mapList[index]['name'],
+                        //       mapList[index]['author'],
+                        //       mapList[index]['publisher'],
+                        //       '20 \$',
+                        //       onPressed());
+                        // },
+                          return BookItem(
+                            url: onlyBookUrl,
+                            name: mapList[index]['name'],
+                            author: mapList[index]['author'],
+                            publisher: mapList[index]['publisher'],
+                            cost: '20\$',
+                            timeStamp: '22 minutes ago',
+                          );
+                        }
                       );
                       return Image.asset('assets/images/book-1.png');
                     } else {
@@ -123,7 +148,8 @@ class _BooksScreenState extends State<BooksScreen> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset('assets/images/not_found.png', height: 200),
+                          Image.asset('assets/images/not_found.png',
+                              height: 200),
                           SizedBox(
                             height: 20,
                           ),
@@ -181,19 +207,20 @@ class _BooksScreenState extends State<BooksScreen> {
 
   _getList() {}
 
-  onChanged(String value){
+  onChanged(String value) {
     // setState(() {
-      url = '$url?userId=$value';
+    booksUrl = '$booksUrl?userId=$value';
     // });
-    print(url);
+    print(booksUrl);
   }
-
 }
 
 class FloatAppBar extends StatelessWidget with PreferredSizeWidget {
   final TextEditingController controller;
   final Function onChanged;
+
   FloatAppBar({this.controller, this.onChanged});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -212,7 +239,7 @@ class FloatAppBar extends StatelessWidget with PreferredSizeWidget {
                   children: <Widget>[
                     Expanded(
                       child: TextField(
-                        onChanged: (val){
+                        onChanged: (val) {
                           onChanged(controller.text);
                         },
                         controller: controller,
@@ -252,7 +279,7 @@ class FloatAppBar extends StatelessWidget with PreferredSizeWidget {
     );
   }
 
-  onPressed(BuildContext context){
+  onPressed(BuildContext context) {
     Navigator.pushNamed(context, FilterScreen.id);
   }
 
@@ -260,13 +287,3 @@ class FloatAppBar extends StatelessWidget with PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-class FilterWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [],
-      ),
-    );
-  }
-}

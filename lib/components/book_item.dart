@@ -24,7 +24,7 @@ class MyBookItem extends StatelessWidget {
           vertical: 5,
         ),
         padding: EdgeInsets.only(top: 15),
-        height: 100,
+        height: 140,
         width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -44,14 +44,14 @@ class MyBookItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 10, right: 20),
+                  padding: EdgeInsets.only(left: 0, right: 20),
                   child: Row(
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(top: 10),
                         child: FadeInImage(
-                          width: 60,
-                          height: 60,
+                          width: 120,
+                          height: 120,
                           placeholder: AssetImage('assets/images/not_found.png'),
                           image: NetworkImage(url ?? baseUrl),
                         ),
@@ -78,7 +78,7 @@ class MyBookItem extends StatelessWidget {
                               child: Text(
                                 category ?? 'category',
                                 style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 14,
                                   color: kLightBlackColor,
                                 ),
                               ),
