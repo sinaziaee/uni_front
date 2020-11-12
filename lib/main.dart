@@ -7,6 +7,7 @@ import 'package:my_university/screens/registeration_screen.dart';
 import 'package:my_university/screens/welcome_screen.dart';
 
 import 'constants.dart';
+import 'screens/home_screen.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         accentColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: LoginScreen.id,
+      initialRoute: HomeScreen.id,
       routes: {
         RegisterationScreen.id: (context) => RegisterationScreen(),
         LoginScreen.id: (context) => LoginScreen(),
