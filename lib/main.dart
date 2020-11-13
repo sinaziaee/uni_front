@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_university/screens/books_screen.dart';
+import 'package:my_university/screens/chat_screen.dart';
 import 'package:my_university/screens/email_verfication_screen.dart';
 import 'package:my_university/screens/home_screen.dart';
 import 'package:my_university/screens/login_screen.dart';
@@ -24,8 +25,9 @@ class MyApp extends StatelessWidget {
         accentColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: HomeScreen.id,
+      initialRoute: ChatScreen.id,
       routes: {
+        ChatScreen.id : (context) => ChatScreen(),
         RegisterationScreen.id: (context) => RegisterationScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
