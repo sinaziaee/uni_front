@@ -226,6 +226,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.3"
+<<<<<<< HEAD
   web_socket_channel:
     dependency: "direct main"
     description:
@@ -233,6 +234,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+=======
+>>>>>>> bd5ee693457377d1254685515b52076802b060ea
   xml:
     dependency: transitive
     description:
